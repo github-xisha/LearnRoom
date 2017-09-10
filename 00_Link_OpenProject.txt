@@ -1,1 +1,4 @@
 文本纠错：https://github.com/ShiboBrady/SpellCorrect.git
+企业网盘:https://github.com/windowswind/Netdisk.git
+网盘:https://github.com/zyxyoshine/Net-syncdisk.git
+ftp网盘:https://github.com/cuixuage/LinuxC_server_mysql_client.git
