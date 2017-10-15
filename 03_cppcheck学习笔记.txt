@@ -1,0 +1,70 @@
+Cppcheck的学习
+
+http://blog.csdn.net/fengbingchun/article/details/77803920
+http://hao.jobbole.com/cppcheck/
+http://blog.csdn.net/yzlworld/article/details/29572051
+-------------------------------------------------------------------------------------------
+>>day 2017.10.15
+
+在线安装：sudo apt-get install cppcheck
+
+离线安装：
+https://github.com/danmar/cppcheck/releases 下载最新源码cppcheck-1.81.tar.gz
+通过tar -xvzf cppcheck-1.8.1.tar.gz进行解压缩
+直接make进行编译，完成后，make install进行安装
+
+首次测试可能出现的问题：cppcheck std.cfg not found error when std.cfg file is available
+解决：
+$ make SRCDIR=build CFGDIR=/usr/share/cppcheck/
+$ sudo make install CFGDIR=/usr/share/cppcheck/
+
+
+使能检查规则：
+--enable=error（默认）
+--enable=all 
+--enable=style
+
+规则定义：
+error：出现的错误
+warning：为了预防bug防御性编程建议信息
+style：编码格式问题（没有使用的函数、多余的代码等）
+portablity：移植性警告。该部分如果移植到其他平台上，可能出现兼容性问题
+performance：建议优化该部分代码的性能
+information：一些有趣的信息，可以忽略不看的。
+
+
+检查目录所有文件
+cppcheck pathname
+
+排除一个文件或者一个文件夹
+cppcheck -isrc/foo.c src
+
+启用警告消息：
+cppcheck --enable=warning file.c
+
+
+启用所有消息：
+cppcheck --enable=all
+
+
+保存结果到文件中
+很多时候，会希望将结果保存在一个文件中，可以使用 shell 的管道重定向错误输出到一个文件：
+cppcheck file.c 2> err.txt
+
+
+多线程检查
+选项 -j 用于指定需要使用的线程数，例如，使用 4 个线程检查文件夹中的文件：
+cppcheck -j 4 path
+
+
+XML 输出
+cppcheck --xml-version=2 file.cpp
+
+格式化输出
+cppcheck --template=vs gui/test.cpp
+
+要获得 gcc 兼容的输出，可以使用 --template=gcc：
+cppcheck --template=gcc gui/test.cpp
+
+可以编写自己的模式（例如，逗号分隔格式）：
+cppcheck --template="{file},{line},{severity},{id},{message}" gui/test.cpp
